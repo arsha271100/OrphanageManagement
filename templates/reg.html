@@ -1,0 +1,200 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Orphanage and donation management</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css2/roboto-font.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'fonts2/font-awesome-5/css/fontawesome-all.min.css' %}">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="{% static 'css2/style.css' %}"/>
+</head>
+
+<script>
+  function validateform()
+            {
+                var a=document.getElementById('name').value.trim();
+                var b=document.getElementById('email').value.trim();
+                var c=document.getElementById('place').value.trim();
+				var f=document.getElementById('numb').value.trim();
+                var d=document.getElementById('password').value.trim();
+                var e=document.getElementById('cpassword').value.trim();
+
+
+
+				if(a=="")
+                {
+					document.getElementById('nme').style.display="block";
+                    document.getElementById('nme').innerHTML="**Please Enter Name";
+                    return false;
+                }
+				if(/[^a-zA-Z]/.test(a)){
+					document.getElementById('nme').style.display="block";
+                    document.getElementById('nme').innerHTML="**Alphabets Only";
+                    return false;
+				}
+				else{
+					document.getElementById('nme').style.display="none";
+					
+				}
+				if(b=="")
+                {
+					document.getElementById('eml').style.display="block";
+                    document.getElementById('eml').innerHTML="**Please Enter Email";
+                    return false;
+                }
+				if(b.indexOf('@')<=0){
+					document.getElementById('eml').style.display="block";
+                    document.getElementById('eml').innerHTML="**Invalid  Email Address";
+                    return false;
+                }
+				if ((b.charAt(b.length-4)!='.') && (b.charAt(b.length-3)!='.')) {
+					document.getElementById('eml').style.display="block";
+                    document.getElementById('eml').innerHTML="**Invalid  Email Address";
+                    return false;
+                }
+				else{
+					document.getElementById('eml').style.display="none";
+					
+				}
+				if(c=="")
+                {
+					document.getElementById('plce').style.display="block";
+                    document.getElementById('plce').innerHTML="**Please Enter Place";
+                    return false;
+                }
+				else{
+					document.getElementById('plce').style.display="none";
+					
+				}
+				var expr = /^[6-9]\d{9}$/;
+				if(f=="")
+                {
+					document.getElementById('ph').style.display="block";
+                    document.getElementById('ph').innerHTML="**Please Enter Number";
+                    return false;
+                }
+				
+				if(f=="")
+                {
+                    document.getElementById('ph').style.display = "block";
+
+                    document.getElementById('ph').innerHTML="**Please Enter  phone";
+                    return false;
+                }
+                       if(f!="" && expr.test(f)==false){
+                           document.getElementById('ph').style.display= "block";
+                           document.getElementById('ph').innerHTML ="Invalid Phone number";
+                           return false;
+                                   }
+                                   else{
+                           document.getElementById('ph').style.display = "none";
+                           
+                       }
+				var passpatern=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+
+				if(d=="")
+                {
+					document.getElementById('pass').style.display="block";
+                    document.getElementById('pass').innerHTML="**please enter Password";
+                    return false;
+                }
+				if (!d.match(passpatern))
+                    {
+                        document.getElementById('pass').style.display="block";
+                        document.getElementById('pass').innerHTML="** capital | small | number | minimum 8 character";
+                        return false;
+                    }
+				else{
+					document.getElementById('pass').style.display="none";
+					
+				}
+				if(e=="")
+                {
+					document.getElementById('cpass').style.display="block";
+                    document.getElementById('cpass').innerHTML="**please enter Confirm Password";
+                    return false;
+                }
+				if(d!=e)
+                {
+					document.getElementById('cpass').style.display="block";
+                    document.getElementById('cpass').innerHTML="**Incorrect Password";
+                    return false;
+                }
+				else{
+					document.getElementById('cpass').style.display="none";
+					return true;
+				}
+				
+			}
+
+		
+</script>
+
+
+<body class="form-v5" style="background-image: url('{% static 'img2/orphans.jpg '%}');">
+	
+	<div class="page-content">
+	
+		<div class="form-v5-content" >
+
+			
+			<form class="form-detail" action="{% url 'reg' %}" method="post" onsubmit="return validateform();">
+				{% csrf_token %}
+				<h2 style="color: rgba(255, 255, 255, 0.614);">Apply as a Donor</h2>	
+				
+				{% include 'alert.html' %}
+
+				<script>
+					setTimeout(function(){
+					  if ($('#msg').length > 0){
+						$('#msg').remove();
+						}
+					  },4000)
+			  
+				</script>
+
+
+
+				<div class="form-row">
+					<input type="text" name="name" id="name"  class="input-text" placeholder="Your Name" title="Enter your first name"  onKeyUp="return validateform()" onblur="return validateform()" autocomplete="off">
+					
+					<span id="nme" style="color: red;"></span>
+				</div>
+				<div class="form-row">
+					<input type="text" name="email" id="email" class="input-text" placeholder="Your Email"  title="Enter your email"   onKeyUp="return validateform()" onblur="return validateform()">
+				    <span id="eml" style="color: red;"></span>
+				</div>
+				<div class="form-row">
+					<input type="text" name="place" id="place"  class="input-text" placeholder="Your Place" title="Enter your place"  onKeyUp="return validateform()" onblur="return validateform()">
+				    <span id="plce" style="color: red;"></span>
+				</div>
+				<div class="form-row">
+					<input type="tel" name="phone" id="numb" class="input-text" placeholder="Enter Your Number" title="Enter your phone number"  maxlength="10" minlength="10" onKeyUp="return validateform()" onblur="return validateform()">
+				    <span id="ph" style="color: red;"></span>
+				</div>
+				<div class="form-row">
+					<input type="tel" name="aadhar" id="aadhar" class="input-text" placeholder="Enter Your Aadhar Number" title="Enter your Aadhar number"  maxlength="12" minlength="12" onKeyUp="return validateform()" onblur="return validateform()">
+				    <span id="aadhar" style="color: red;"></span>
+				</div>
+				<div class="form-row">
+					<input type="password" name="pass1" id="password" class="input-text" placeholder=" Password" title="Enter your password" onKeyUp="return validateform()" onblur="return validateform()">
+				    <span id="pass" style="color: red;"></span>
+				</div>
+				<div class="form-row">
+					<input type="password" name="pass2" id="cpassword" class="input-text" placeholder="Confirm Password" title="confirm your password"  onKeyUp="return validateform()" onblur="return validateform()">
+				    <span id="cpass" style="color: red;"></span>
+				</div>
+				<div class="form-row-last">
+					<input type="submit" name="register" class="register" value="Register">
+					<a style="margin-left: 100px;color:rgb(247, 247, 248);text-decoration: none;" href="{% url 'login' %}">Sign in</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

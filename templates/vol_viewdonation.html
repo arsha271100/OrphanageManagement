@@ -1,0 +1,76 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Orphanage and donation management</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="{%static 'https://fonts.googleapis.com/css?family=Roboto:400,100,300,700'%}" rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="{%static 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/cssO/font-awesome.min.css '%}">
+	
+	<link rel="stylesheet" href="{%static 'cssO/style.css'%}">
+
+	</head>
+	<body>
+	<section class="ftco-section">
+		<div class="container">
+			
+			<div class="row">
+				<div class="col-md-12">
+					<h4 class="text-center mb-4">Donation Details</h4>
+					<div class="table-wrap" >
+						<table class="table">
+					    <thead class="thead-primary">
+					      <tr>
+					        <th>Orphanage Name</th>
+					        <th>Donation Items</th>
+					        <th>Other Donations</th>
+					        <th>collecting Date</th>
+					        <th>Collecting Address</th>
+					        <th>Status</th>
+                            
+					      </tr>
+                        </thead>
+					     
+                            {% for a in result %}
+                           
+                            <tr>
+							<td>{{a.orphanage.name}}</td>
+					       
+					        <td>{{a.item}}</td>
+					        <td>{{a.otherdonations}}</td>
+					        <td>{{a.date}}</td>
+					        <td>{{a.address.hname}},{{a.address.city}},Pin-{{a.address.pin}},{{a.address.district}}</td>
+							{% if a.status == 0 %}
+								<td><a href="{% url 'donate_approve' a.id %}" style="color: red;">Pending</a></td>
+							{% else %}
+								<td><a style="color: green;">Accepted</a></td>
+							{% endif %}
+                            </tr>
+                            
+                            {% endfor %}
+					        
+                        
+					     
+					  </table>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</section>
+
+	<script src="{%static 'jsO/jquery.min.js'%}"></script>
+  <script src="{%static 'jsO/popper.js'%}"></script>
+  <script src="{%static 'jsO/bootstrap.min.js'%}"></script>
+  <script src="{%static 'jsO/main.js'%}"></script>
+
+	</body>
+</html>
+
+{% endblock %}

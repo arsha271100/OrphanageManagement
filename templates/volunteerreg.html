@@ -1,0 +1,304 @@
+<!-- {% extends 'base.html' %} -->
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+
+
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{%static 'donate/fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{%static 'donate/css/style.css' %}">
+</head>
+
+<body>
+
+
+    {% include 'alert.html' %}
+
+    <script>
+        setTimeout(function(){
+          if ($('#msg').length > 0){
+            $('#msg').remove();
+            }
+          },3000)</script>
+
+
+
+
+
+<script>
+    function validateform()
+              {
+                  var a=document.getElementById('fname').value.trim();
+                  var b=document.getElementById('lname').value.trim();
+                  var c=document.getElementById('email').value.trim();
+                  var d=document.getElementById('phn').value.trim();
+                  var h=document.getElementById('dist').value.trim();
+                //   var i=document.getElementById('item').value.trim();
+                  var e=document.getElementById('hname').value.trim();
+                  var f=document.getElementById('city').value.trim();
+                  var g=document.getElementById('pin').value.trim();
+  
+  
+  
+                  if(a=="")
+                  {
+                      document.getElementById('fnme').style.display="block";
+                      document.getElementById('fnme').innerHTML="**Please Enter First Name";
+                      return false;
+                  }
+                  if(/[^a-zA-Z]/.test(a)){
+                      document.getElementById('fnme').style.display="block";
+                      document.getElementById('fnme').innerHTML="**Alphabets Only";
+                      return false;
+                  }
+                  else{
+                      document.getElementById('fnme').style.display="none";
+                  }
+                  if(b=="")
+                  {
+                      document.getElementById('lnme').style.display="block";
+                      document.getElementById('lnme').innerHTML="**Please Enter last Name";
+                      return false;
+                  }
+                  if(/[^a-zA-Z]/.test(b)){
+                      document.getElementById('lnme').style.display="block";
+                      document.getElementById('lnme').innerHTML="**Alphabets Only";
+                      return false;
+                  }
+                  else{
+                      document.getElementById('lnme').style.display="none";
+                      
+                  }
+                  if(c=="")
+                  {
+                      document.getElementById('eml').style.display="block";
+                      document.getElementById('eml').innerHTML="**Please Enter Email";
+                      return false;
+                  }
+                  if(c.indexOf('@')<=0){
+                      document.getElementById('eml').style.display="block";
+                      document.getElementById('eml').innerHTML="**Invalid  Email Address";
+                      return false;
+                  }
+                  if ((c.charAt(c.length-4)!='.') && (c.charAt(c.length-3)!='.')) {
+                      document.getElementById('eml').style.display="block";
+                      document.getElementById('eml').innerHTML="**Invalid  Email Address";
+                      return false;
+                  }
+                  else{
+                      document.getElementById('eml').style.display="none";
+                      
+                  }
+                  var expr = /^[6-9]\d{9}$/;
+                  if(d=="")
+                  {
+                      document.getElementById('ph').style.display = "block";
+  
+                      document.getElementById('ph').innerHTML="**Please Enter  phone";
+                      return false;
+                  }
+                    if(d!="" && expr.test(d)==false){
+                     document.getElementById('ph').style.display= "block";
+                     document.getElementById('ph').innerHTML ="Invalid Phone number";
+                     return false;
+                         }
+                        else{
+                            document.getElementById('ph').style.display = "none";
+                             
+                         }
+               
+                // if(i=="")
+                //   {
+                //       document.getElementById('itm').style.display="block";
+                //       document.getElementById('itm').innerHTML="**Please Enter Housename";
+                //       return false;
+                //   }
+                if(e=="")
+                  {
+                      document.getElementById('hnme').style.display="block";
+                      document.getElementById('hnme').innerHTML="**Please Enter Housename";
+                      return false;
+                  }
+                  else{
+                      document.getElementById('hnme').style.display="none";
+                  }
+                  if(f=="")
+                  {
+                      document.getElementById('cty').style.display="block";
+                      document.getElementById('cty').innerHTML="**Please Enter City";
+                      return false;
+                  }
+                  else{
+                      document.getElementById('cty').style.display="none";
+                      
+                  }
+                  var exprr = /^[1-9]\d{5}$/;
+
+                  if(g=="")
+                  {
+                      document.getElementById('pn').style.display="block";
+                      document.getElementById('pn').innerHTML="**Please Enter Pin";
+                      return false;
+                  }
+                  if(g!="" && exprr.test(g)==false){
+                     document.getElementById('pn').style.display= "block";
+                     document.getElementById('pn').innerHTML ="Invalid pin number";
+                     return false;
+                         }
+                  else{
+                      document.getElementById('pn').style.display="none";
+                      return true;
+                  }
+                //   if(h=="")
+                //   {
+                //     //   document.getElementById('dist').style.display="block";
+                //       document.getElementById('dist').innerHTML="**Please Enter Housename";
+                //       return false;
+                //   }
+                //   else{
+                //             // document.getElementById('dist').style.display = "none";
+                //              return true;
+                             
+                //          }
+                    
+              }
+  
+          
+  </script>
+
+    <div class="main">
+
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <h2 class="form-title">Apply as a Volunteer</h2>
+                        <form method="POST" action="{% url 'volunteerreg' %}" class="register-form" id="register-form" onsubmit="return validateform();">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name"></label>
+                                <input type="text" name="fname" id="fname" class="input-text" placeholder="First Name" title="Enter your first name" onKeyUp="return validateform()" onblur="return validateform()" autocomplete="off" >
+				                 <span id="fnme" style="color: red;"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="name"></label>
+                                <input type="text" name="lname" id="lname" class="input-text" placeholder="Last Name" title="Enter your last name"  onKeyUp="return validateform()" onblur="return validateform()">
+				                 <span id="lnme" style="color: red;"></span>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="pass"></label>
+                                <input type="email" name="email" id="email" class="input-text" placeholder="Email"  title="Enter your phone number" onKeyUp="return validateform()" onblur="return validateform()">
+                                <span id="eml" style="color: red;"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass"></label>
+                                <input type="tel" name="phone" id="phn" class="input-text" placeholder="Phone Number" maxlength="10" title="Enter your phone number" onKeyUp="return validateform()" onblur="return validateform()">
+                                <span id="ph" style="color: red;"></span>
+                            </div>
+                            
+                        <div class="form-group">
+                            <label for="re-pass"></label>
+                            <input type="text" name="hname" id="hname" class="input-text" placeholder="Enter House name" title="Enter your house name"  onKeyUp="return validateform()" onblur="return validateform()">	
+                            <span id="hnme" style="color: red;"></span>
+                            
+                        </div>
+						<div class="form-group">
+							<!-- <label for="re-pass"><i class="zmdi zmdi-city"></i></label> -->
+							<select class="form-control" name="district" id="dist" title="Select your district"  style="font-size:14px;width:400px;color:rgb(134, 128, 128);" >
+							<option lass="input-text" value="">Select District</option>
+							{% for i in district %}
+							<option value="{{i.id}}">{{i.name}}</option>
+							{% endfor %}
+							</select>
+							<span id="dist" style="color: red;"></span>
+							<!-- <h4 class="form-title">Items</h4> -->
+								
+						</div>
+
+                            <div class="form-group">
+                                <label for="re-pass"></label>
+                                <input type="text" name="city" id="city" class="input-text" placeholder="Enter city" title="Enter your city"  onKeyUp="return validateform()" onblur="return validateform()">	
+                                <span id="cty" style="color: red;"></span>
+                                
+                            </div>
+
+                            <div class="form-group">
+                                <label for="re-pass"></label>
+                                <input type="tel" name="pin" id="pin" class="input-text" placeholder="Pin Number" maxlength="6" title="Enter your pin" onKeyUp="return validateform()" onblur="return validateform()">	
+                                <span id="pn" style="color: red;"></span>
+                                
+                            </div>
+							<div class="form-group">
+                                <label for="pass"></label>
+                                <input type="tel" name="aadhar" id="aadhar" class="input-text" placeholder="Enter Aadhar number" maxlength="12" title="Enter your aadhar number" >
+                                <span id="ph" style="color: red;"></span>
+                            </div>
+							<div class="form-row">
+								<input type="password" name="pass1" id="password" class="input-text" placeholder=" Password" title="Enter your password" onKeyUp="return validateform()" onblur="return validateform()">
+								<span id="pass" style="color: red;"></span>
+							</div>
+							<div class="form-row">
+								<input type="password" name="pass2" id="cpassword" class="input-text" placeholder="Confirm Password" title="confirm your password"  onKeyUp="return validateform()" onblur="return validateform()" style="margin-top:10px;">
+								<span id="cpass" style="color: red;"></span>
+							</div>
+                           
+
+                           
+                            
+                            <div class="form-group form-button">
+                                <input style="border: none;" type="submit" name="signup" id="signup" class="form-submit" value="Submit"/>
+                            </div>      
+                    </div>
+                    
+                    <div  style="display:flex; flex-direction: column; ">
+                        <h2 class="form-title"></h2>
+                    <!-- <div class="form-group">
+                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                        <label for="agree-term" class="label-agree-term"><span><span></span></span>Cloths
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                        <label for="agree-term" class="label-agree-term"><span><span></span></span>Food Items
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                        <label for="agree-term" class="label-agree-term"><span><span></span></span>Money
+                    </div> -->
+                    <!-- <div  class="form-group"> -->
+                <!-- <table>
+                    <tr>
+                        <th><input  type="checkbox" id="item1" name="item1" value="cloths" /></th> 
+                        <th><h4" >Cloths</h4></th> 
+                    </tr>    
+                </table> -->
+
+                 <!-- <h3 class="form-control">
+                 <input type="radio" name="checkbox" />
+                 Checkbox
+                 </h3>
+                    </div> -->
+
+                </form>
+                </div>
+            </div>
+        </section>    
+    </div>
+    <!-- JS -->
+    <script src="{%static 'donate/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{%static 'donate/js/main.js' %}"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+
+{% endblock %}

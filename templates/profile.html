@@ -1,0 +1,510 @@
+{% load static %}
+<!DOCTYPE html>
+ <html class="no-js"> 
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Charity &mdash; </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FREEHTML5.CO" />
+
+
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'> -->
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{%static 'css/animate.css' %}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{%static 'css/icomoon.css' %}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{%static 'css/bootstrap.css' %}">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="{%static 'css/superfish.css' %}">
+
+	<link rel="stylesheet" href="{%static 'css/style.css' %}">
+
+
+	<!-- Modernizr JS -->
+	<script src="{%static 'js/modernizr-2.6.2.min.js' %}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-sm-6 text-left fh5co-link">
+						<a href="#">FAQ</a>
+						<a href="#">Forum</a>
+						<a href="#">Contact</a>
+					</div>
+					<div class="col-md-6 col-sm-6 text-right fh5co-social">
+						<a href="#" class="grow"><i class="icon-facebook2"></i></a>
+						<a href="#" class="grow"><i class="icon-twitter2"></i></a>
+						<a href="#" class="grow"><i class="icon-instagram2"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<header id="fh5co-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html">Charity</a></h1>
+					<!-- START #fh5co-menu-wrap -->
+					<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li class="active">
+								<a href="{% url 'donorhome' %}">Home</a>
+							</li>					
+							<li>
+								<a href="#" class="fh5co-sub-ddown">{{ email }}</a>
+								<ul class="fh5co-sub-menu">
+								 	<li><a href="{% url 'profile' %}">Profile</a></li>
+								 	<li><a href="{% url 'change_password' %}">Change Password</a></li>
+								 	<!-- <li><a href="#">Medical Mission</a></li> --> 
+								</ul>
+							</li>
+<!--							<li><a href="about.html">About</a></li>-->
+<!--							<li><a href="blog.html">Blog</a></li>-->
+							<li><a href="{% url 'logout' %}">Logout</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+
+    {% include 'alert.html' %}
+
+  <script>
+	  setTimeout(function(){
+	    if ($('#msg').length > 0){
+	      $('#msg').remove();
+	      }
+	    },4000)
+
+  </script>
+
+
+
+
+		<div id="fh5co-content-section" class="fh5co-section-gray">
+			
+			<div class="container">
+				<div class="row">
+				<div class="col-md-4">
+				<div class="fh5co-testimonial text-center animate-box">
+                <h2 style="color:rgb(253, 73, 2);text-decoration: underline;">Profile<span style="color:#000;">-</span><span style="color:#000;text-decoration: underline;">Info</span></h2>
+               <table style="margin-left:40px;margin-top:-30px;margin-bottom:20px;">
+                {% for i in profile %}
+                     {% if i.donoremail == email %} 
+                      <tr><th>Name:</th><th>{{i.donorname}}</th></tr>
+                      <tr><th>Email:</th><th>{{i.donoremail}}</th></tr>
+                      <tr><th>Phone:</th><th>{{i.donorphone}}</th></tr>
+                      <tr><th>place:</th><th>{{i.donorplace}}</th></tr>
+                      <tr><th>Aadhar:</th><th>{{i.donoraadhar}}</th></tr>
+                    {% endif %}
+                {% endfor %}
+              </table>
+
+              <a style="text-decoration:none;margin-top:25px;" href="#" onclick="passhide(mydivss)">Change Password</a>
+            
+            </div>
+			</div>
+					<!-- <div class="col-md-4">
+						<div class="fh5co-testimonial text-center animate-box">
+							<h3></h3>
+							<input type="text" placeholder="Enter Amount">
+						</div>
+					</div> -->
+
+					<div class="col-md-4" style="display:none;" id="passhides">
+						<div class="fh5co-testimonial text-center animate-box">
+              <form action="{% url 'change_password' %}" method="post" onsubmit="return validateform();" >
+                {% csrf_token %}
+                <script type="text/javascript">
+                    mydivss = document.getElementById("passhides");
+                        function passhide(d) {
+                            d.style.display = (d.style.display !== "none") ? "none" : "block";
+                        }
+                 </script>
+			<script>
+				function validateform(){
+					var a=document.getElementById('oldpass').value.trim();
+                	var d=document.getElementById('newpass').value.trim();
+                	var b=document.getElementById('cpss').value.trim();
+					var passpatern=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+
+					if(a=="")
+                {
+					document.getElementById('ops').style.display="block";
+                    document.getElementById('ops').innerHTML="**please enter Old Password";
+                    return false;
+                }
+				
+				else{
+					document.getElementById('ops').style.display="none";
+          			
+				}
+
+				if(d=="")
+                {
+					document.getElementById('nps').style.display="block";
+                    document.getElementById('nps').innerHTML="**please enter New Password";
+                    return false;
+                }
+				if (!d.match(passpatern))
+                    {
+                        document.getElementById('nps').style.display="block";
+                        document.getElementById('nps').innerHTML="** capital | small | number | minimum 8 character";
+                        return false;
+                    }
+				else{
+					document.getElementById('nps').style.display="none";
+          
+				}
+				if(b=="")
+                {
+					document.getElementById('cps').style.display="block";
+                    document.getElementById('cps').innerHTML="**please enter Confirm Password";
+                    return false;
+                }
+				if(d!=b)
+                {
+					document.getElementById('cps').style.display="block";
+                    document.getElementById('cps').innerHTML="**Incorrect Password";
+                    return false;
+                }
+				else{
+					document.getElementById('cps').style.display="none";
+					return true;
+				}
+
+				}
+			</script>	 
+			
+				
+              <input type="password" style="margin-bottom:15px;width:270px;height:42px;" id="oldpass" name="oldpass"  placeholder="Current Password" autocomplete="off" onKeyUp="return validateform()" onblur="return validateform()" >
+              <span id="ops" style="color: red;"></span>
+              <input type="password" style="margin-bottom:15px;width:270px;height:42px;" id="newpass" name="pass"  placeholder="New Password" autocomplete="off" onKeyUp="return validateform()" onblur="return validateform()">
+              <span id="nps" style="color: red;"></span>
+              <input type="password" style="margin-bottom:15px;width:270px;height:42px;" id="cpss" name="cpass"  placeholder="Confirm Password" autocomplete="off" onKeyUp="return validateform()" onblur="return validateform()">
+              <span id="cps" style="color: red;"></span><br>
+                 <input style="width:90px;border:none;color:#fff;background-color:rgb(250, 79, 0);border-radius:3px;height:36px;" type="submit" value="submit">
+                </form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+<div style="background-color:#fff;width:700px;margin-left:80px;border-radius:5px;height:750px;">
+				
+		<h2>*******************************</h2>
+			<h4 style="margin-left:120px;font-weight:bold;">Add Address</h4>
+			<div style="margin-left:30px;float:left;">
+<form method="POST" action="{% url 'address' %}"  onsubmit="return validateform();">
+	{% csrf_token %}
+	<script>
+	function validateform()
+		{
+		var a=document.getElementById('fname').value.trim();
+		var b=document.getElementById('lname').value.trim();
+		var c=document.getElementById('email').value.trim();
+		var d=document.getElementById('phone').value.trim();
+		var e=document.getElementById('hname').value.trim();
+		var f=document.getElementById('city').value.trim();
+		var g=document.getElementById('dist').value.trim();
+		var h=document.getElementById('pnn').value.trim();
+			if(a=="")
+                {
+					document.getElementById('fnm').style.display="block";
+                    document.getElementById('fnm').innerHTML="**Please Enter Name";
+                    return false;
+                }
+				if(/[^a-zA-Z^\s]/.test(a)){
+					document.getElementById('fnm').style.display="block";
+                    document.getElementById('fnm').innerHTML="**Alphabets Only";
+                    return false;
+				}
+				else{
+					document.getElementById('fnm').style.display="none";
+					
+				}
+				if(b=="")
+                {
+					document.getElementById('lnm').style.display="block";
+                    document.getElementById('lnm').innerHTML="**Please Enter Name";
+                    return false;
+                }
+				if(/[^a-zA-Z^\s]/.test(b)){
+					document.getElementById('lnm').style.display="block";
+                    document.getElementById('lnm').innerHTML="**Alphabets Only";
+                    return false;
+				}
+				else{
+					document.getElementById('lnm').style.display="none";
+					
+				}
+				if(c=="")
+                {
+					document.getElementById('eml').style.display="block";
+                    document.getElementById('eml').innerHTML="**Please Enter Email";
+                    return false;
+                }
+				if(c.indexOf('@')<=0){
+					document.getElementById('eml').style.display="block";
+                    document.getElementById('eml').innerHTML="**Invalid  Email Address";
+                    return false;
+                }
+				if ((c.charAt(c.length-4)!='.') && (c.charAt(c.length-3)!='.')) {
+					document.getElementById('eml').style.display="block";
+                    document.getElementById('eml').innerHTML="**Invalid  Email Address";
+                    return false;
+                }
+				else{
+					document.getElementById('eml').style.display="none";
+					
+				}
+
+				var expr = /^[6-9]\d{9}$/;
+				if(d=="")
+                {
+					document.getElementById('phn').style.display="block";
+                    document.getElementById('phn').innerHTML="**Please Enter Number";
+                    return false;
+                }
+                       if(d!="" && expr.test(d)==false){
+                           document.getElementById('phn').style.display= "block";
+                           document.getElementById('phn').innerHTML ="Invalid Phone number";
+                           return false;
+                                   }
+                                   else{
+                           document.getElementById('phn').style.display = "none";
+                           
+                       }
+				if(e=="")
+                {
+					document.getElementById('hnm').style.display="block";
+                    document.getElementById('hnm').innerHTML="**Please Enter Place";
+                    return false;
+                }
+				else{
+					document.getElementById('hnm').style.display="none";
+					
+				}
+				if(f=="")
+                {
+					document.getElementById('cty').style.display="block";
+                    document.getElementById('cty').innerHTML="**Please Enter Place";
+                    return false;
+                }
+				else{
+					document.getElementById('cty').style.display="none";
+
+				}
+				var exprs = /^[6-6]\d{8}$/;
+				if(h=="")
+                {
+					document.getElementById('pn').style.display="block";
+                    document.getElementById('pn').innerHTML="**Please Enter Pin Number";
+                    return false;
+                }
+				// if(h!="" && exprs.test(h)==false){
+                //            document.getElementById('pn').style.display= "block";
+                //            document.getElementById('pn').innerHTML ="Invalid Pin";
+                //            return false;
+                //                    }
+				else{
+					document.getElementById('pn').style.display="none";
+					
+				}
+				if(g=="")
+                {
+					// document.getElementById('dst').style.display="block";
+                    document.getElementById('dst').innerHTML="**Please Select District";
+                    return false;
+                }
+				else{
+					// document.getElementById('dst').style.display="none";
+					return true;
+				}
+				
+				
+			}
+			
+			function onclear(){
+				document.getElementById('dst').innerHTML=""
+			}
+			
+			
+			</script>
+
+				<div class="form-row">
+				   <input style="width:300px;height:50px;margin-bottom:15px;" name="fname" id="fname" type="text" placeholder="First Name" onKeyUp="return validateform()" onblur="return validateform()">
+				   <span id="fnm" style="color: red;"></span>
+				</div>
+
+				<div class="form-row">
+				   <input style="width:300px;height:50px;margin-bottom:15px;" name="lname" id="lname" type="text" placeholder="Last Name" onKeyUp="return validateform()" onblur="return validateform()">
+				   <span id="lnm" style="color: red;"></span>
+				</div>
+
+				<div class="form-row">
+				   <input style="width:300px;height:50px;margin-bottom:15px;" name="email" id="email" type="email" placeholder="Email" onKeyUp="return validateform()" onblur="return validateform()">
+				   <span id="eml" style="color: red;"></span>
+				</div>
+
+				<div class="form-row">
+				   <input style="width:300px;height:50px;margin-bottom:15px;" maxlength="10" minlength="10" name="phone" id="phone" type="tel" placeholder="Phone Number" onKeyUp="return validateform()" onblur="return validateform()">
+				   <span id="phn" style="color: red;"></span>
+				</div>
+
+				<div class="form-row">
+				   <input style="width:300px;height:50px;margin-bottom:15px;" name="hname" id="hname" type="text" placeholder="House Name" onKeyUp="return validateform()" onblur="return validateform()">
+				   <span id="hnm" style="color: red;"></span>
+				</div>
+
+				<div class="form-row">
+				   <input style="width:300px;height:50px;margin-bottom:15px;" name="city" id="city" type="text" placeholder="City" onKeyUp="return validateform()" onblur="return validateform()">
+				   <span id="cty" style="color: red;"></span>
+				</div>
+
+			
+
+				<div class="form-row">
+					<input style="width:300px;height:50px;margin-bottom:15px;" maxlength="6" minlength="6" name="pin" id="pnn" type="text" placeholder="Pin Number" onKeyUp="return validateform()" onblur="return validateform()" required>
+					<span id="pn" style="color: red;"></span>
+				</div>
+				<div class="form-row">
+					<select class="form-control" name="district" id="dist" title="Select your district"  style="font-size:14px;width:300px;color:rgb(134, 128, 128);border-color: rgba(0, 0, 0, 0.637);height:50px;margin-bottom:15px;" onclick="return onclear();">
+					 <option lass="input-text" value="" style="color:#000;">Select District</option>
+					 {% for i in district %}
+					 <option value="{{i.id}}" style="color:black;">{{i.name}}</option>
+					 {% endfor %}
+					 </select>
+					 <span id="dst" style="color: red;"></span>
+				 </div>
+
+				   <input style="width:115px;height:30px;margin-top:30px;margin-left:100px;background-color:rgb(248, 130, 34);border:none;color:#fff;border-radius:3px;margin-bottom:15px;" type="Submit" value="Add Address">
+				</form>
+				</div>
+
+				<div style="background-color: #fff;float:left;margin-left:40px;">
+				<h3>Address</h3>
+					{% for i in address %}
+					{% if i.id%}
+				<table>
+
+					<tr>
+						
+						<td>First Name:</td><td>{{i.fname}}</td><td><a href="{% url 'deleteaddress' i.id %}" ><i style="color:rgb(253, 152, 0);font-weight:bold;" class="icon-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>Last Name:</td><td>{{i.lname}}</td>
+					</tr>
+					<tr>
+						<td>Email:</td><td>{{i.email}}</td>
+					</tr>
+					<tr>
+						<td>Phone:</td><td>{{i.phone}}</td>
+					</tr>
+					<tr>
+						<td>House name:</td><td>{{i.hname}}</td>
+					</tr>
+					<tr>
+						<td>City:</td><td>{{i.city}}</td>
+					</tr>
+					<tr>
+						<td>District:</td><td>{{i.district.name}}</td>
+					</tr>
+					<tr>
+						<td>Pin:</td><td>{{i.pin}}</td>
+					</tr>
+				</table>
+					<h6>__________________________</h6>
+					{% endif %}
+					{% endfor %}
+				
+				</div>
+			</div>
+
+		</div>
+		<!-- fh5co-content-section -->
+
+		
+		
+
+
+	
+		<!-- fh5co-blog-section -->
+		<footer>
+			<div id="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center">
+							<p class="fh5co-social-icons">
+								<a href="#"><i class="icon-twitter2"></i></a>
+								<a href="#"><i class="icon-facebook2"></i></a>
+								<a href="#"><i class="icon-instagram"></i></a>
+								<a href="#"><i class="icon-dribbble2"></i></a>
+								<a href="#"><i class="icon-youtube"></i></a>
+							</p>
+							<p>Copyright 2016 Free Html5 <a href="#">Charity</a>. All Rights Reserved. <br>Made with <i class="icon-heart3"></i> by <a href="http://freehtml5.co/" target="_blank">Freehtml5.co</a> / Demo Images: <a href="https://unsplash.com/" target="_blank">Unsplash</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+
+	</div>
+	<!-- END fh5co-page -->
+
+	</div>
+	<!-- END fh5co-wrapper -->
+
+	<!-- jQuery -->
+
+
+	<script src="{%static 'js/jquery.min.js'%}"></script>
+	<!-- jQuery Easing -->
+	<script src="{%static 'js/jquery.easing.1.3.js'%}"></script>
+	<!-- Bootstrap -->
+	<script src="{%static 'js/bootstrap.min.js'%}"></script>
+	<!-- Waypoints -->
+	<script src="{%static 'js/jquery.waypoints.min.js'%}"></script>
+	<script src="{%static 'js/sticky.js'%}"></script>
+
+	<!-- Stellar -->
+	<script src="{%static 'js/jquery.stellar.min.js'%}"></script>
+	<!-- Superfish -->
+	<script src="{%static 'js/hoverIntent.js'%}"></script>
+	<script src="{%static 'js/superfish.js'%}"></script>
+
+	<!-- Main JS -->
+	<script src="{%static 'js/main.js'%}"></script>
+
+	</body>
+</html>
+
